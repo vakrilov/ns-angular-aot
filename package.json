@@ -7,35 +7,62 @@
     "id": "org.nativescript.aotTest",
     "tns-android": {
       "version": "2.3.0"
+    },
+    "tns-ios": {
+      "version": "2.3.0"
     }
   },
+  "scripts": {
+    "aot": "ngc -p tsconfig-aot.json && node aot-fix.js && tsc",
+    "tsc": "tsc",
+    "prestart": "npm run tsc",
+    "ns-clean": "shx rm -rf app/**/*.css app/**/*.js src/aot",
+    "ns-webpack-android": "webpack --config=webpack.android.js",
+    "ns-webpack-ios": "webpack --config=webpack.ios.js",
+    "ns-livesync-android": "tns livesync android --bundle --watch --disable-npm-install",
+    "ns-livesync-ios": "tns livesync ios --watch --bundle --watch --disable-npm-install",
+    "ns-start-sync-android": "node wait-for-bundle.js android && npm run ns-livesync-android",
+    "ns-start-sync-ios": "node wait-for-bundle.js ios && npm run ns-livesync-ios",
+    "prestart-android": "npm run ns-clean",
+    "start-android": "nf -j Procfile.android start",
+    "prestart-ios": "npm run ns-clean",
+    "start-ios": "nf -j Procfile.ios start",
+    "prepare-android": "npm run ns-clean && shx rm -rf platforms/android && tns prepare android --disable-npm-install",
+    "prepare-ios": "npm run ns-clean && shx rm -rf platforms/ios && tns prepare ios --disable-npm-install",
+    "prestart-aot-android": "npm run ns-clean",
+    "start-aot-android": "npm run aot && npm run ns-webpack-android && npm run ns-livesync-android",
+    "prestart-aot-ios": "npm run ns-clean",
+    "start-aot-ios": "npm run aot && npm run ns-webpack-ios && npm run ns-livesync-ios"
+  },
   "dependencies": {
-    "@angular/core": "~2.1.0",
-    "@angular/common": "~2.1.0",
-    "@angular/compiler": "~2.1.0",
-    "@angular/http": "~2.1.0",
-    "@angular/platform-browser": "~2.1.0",
-    "@angular/platform-browser-dynamic": "~2.1.0",
-    "@angular/platform-server": "~2.1.0",
-    "@angular/forms": "~2.1.0",
-    "@angular/router": "~3.1.0",
-    "@angular/compiler-cli": "~2.1.0",
-    "tns-core-modules": "~2.3.0",
+    "@angular/common": "2.1.0",
+    "@angular/compiler": "2.1.0",
+    "@angular/core": "2.1.0",
+    "@angular/forms": "2.1.0",
+    "@angular/http": "2.1.0",
+    "@angular/platform-browser": "2.1.0",
+    "@angular/platform-browser-dynamic": "2.1.0",
+    "@angular/router": "3.1.0",
     "nativescript-angular": "1.1.0",
     "reflect-metadata": "~0.1.8",
-    "rxjs": "5.0.0-beta.12",
-    "parse5": "1.3.2",
-    "punycode": "1.3.2",
-    "querystring": "0.2.0",
-    "url": "0.10.3"
+    "tns-core-modules": "2.3.0",
+    "@angular/compiler-cli": "2.1.0"
   },
   "devDependencies": {
     "babel-traverse": "6.16.0",
     "babel-types": "6.16.0",
-    "babylon": "6.11.4",
+    "babylon": "6.11.6",
+    "glob": "^7.1.1",
     "lazy": "1.0.11",
     "nativescript-dev-typescript": "^0.3.2",
     "typescript": "^2.0.3",
-    "zone.js": "^0.6.21"
+    "zone.js": "~0.6.21",
+    "webpack": "~2.1.0-beta.25",
+    "webpack-sources": "0.1.2",
+    "copy-webpack-plugin": "^3.0.1",
+    "awesome-typescript-loader": "2.2.4",
+    "html-loader": "^0.4.3",
+    "foreman": "2.0.0",
+    "shx": "^0.1.4"
   }
 }

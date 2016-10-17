@@ -13,13 +13,12 @@
     "types": []
   },
   "files": [
-    "app/app.component.ts",
-    "app/app.module.ts",
     "references.d.ts",
-    "./typings/index.d.ts"
+    "src/app.module.ts"
   ],
   "angularCompilerOptions": {
-    "genDir": "aot",
-    "skipMetadataEmit": true
+    "genDir": "src/aot",
+    "skipMetadataEmit": true,
+    "debug": true
   }
 }
