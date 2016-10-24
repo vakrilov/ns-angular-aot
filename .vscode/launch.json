@@ -6,8 +6,8 @@
       "type": "node",
       "request": "launch",
       "stopOnEntry": true,
-      "program": "${workspaceRoot}/node_modules/.bin/ngc",
-      "args": ["-p", "tsconfig-aot.json"],
+      "program": "${workspaceRoot}/node_modules/.bin/webpack",
+      "args": ["--config", "webpack.android.aot.js", "--verbose"],
       "preLaunchTask": null,
       "runtimeExecutable": null,
       "runtimeArgs": [

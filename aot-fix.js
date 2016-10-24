@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var glob = require("glob");
 var fs = require("fs");
+var fixAot = require("./aot-fix-loader");
 // var replace = require("replace");
 
 var AOT_DIR = "./src/aot";
@@ -12,14 +13,7 @@ glob.sync(AOT_DIR + "/**/*.ts").forEach(function (fileName, index, array) {
   // console.log("processing: " + fileName);
   var data = fs.readFileSync(fileName, 'utf8')
 
-  var result = data;
-  result = result.replace(/(..\/)*platform\'/g, 'platform\'');
-  result = result.replace(/(..\/)*ui\/frame\'/g, 'ui/frame\'');
-  result = result.replace(/(..\/)*ui\/page\'/g, 'ui/page\'');
-
-  if (data !== result) {
-    console.log("Imports fixed for: " + fileName);
-  }
+  var result = fixAot.call({ request: fileName}, data);
 
   fs.writeFileSync(fileName, result, 'utf8');
 

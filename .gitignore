@@ -12,3 +12,5 @@ src/*.js
 
 *.ngfactory.ts
 *.ngfactory.js
+
+npm-debug.log

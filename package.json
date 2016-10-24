@@ -32,7 +32,8 @@
     "prestart-aot-android": "npm run ns-clean",
     "start-aot-android": "npm run aot && npm run ns-webpack-android && npm run ns-livesync-android",
     "prestart-aot-ios": "npm run ns-clean",
-    "start-aot-ios": "npm run aot && npm run ns-webpack-ios && npm run ns-livesync-ios"
+    "start-aot-ios": "npm run aot && npm run ns-webpack-ios && npm run ns-livesync-ios",
+    "webpack-aot-android": "webpack --config webpack.android.aot.js --verbose"
   },
   "dependencies": {
     "@angular/common": "2.1.1",
@@ -48,21 +49,24 @@
     "tns-core-modules": "2.3.0"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "2.1.1",    
+    "@angular/compiler-cli": "2.1.1",
+    "@ngtools/webpack": "^1.1.2",
+    "angular2-template-loader": "^0.5.0",
+    "awesome-typescript-loader": "^2.2.4",
     "babel-traverse": "6.16.0",
     "babel-types": "6.16.0",
     "babylon": "6.11.6",
+    "copy-webpack-plugin": "^3.0.1",
+    "foreman": "2.0.0",
     "glob": "^7.1.1",
+    "html-loader": "^0.4.3",
     "lazy": "1.0.11",
     "nativescript-dev-typescript": "^0.3.2",
+    "raw-loader": "^0.5.1",
+    "shx": "^0.1.4",
     "typescript": "^2.0.3",
-    "zone.js": "~0.6.21",
     "webpack": "~2.1.0-beta.25",
     "webpack-sources": "0.1.2",
-    "copy-webpack-plugin": "^3.0.1",
-    "awesome-typescript-loader": "2.2.4",
-    "html-loader": "^0.4.3",
-    "foreman": "2.0.0",
-    "shx": "^0.1.4"
+    "zone.js": "~0.6.21"
   }
 }

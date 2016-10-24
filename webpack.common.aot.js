@@ -2,6 +2,7 @@ var webpack = require("webpack");
 var ConcatSource = require("webpack-sources").ConcatSource;
 //var ForkCheckerPlugin = require('awesome-typescript-loader').ForkCheckerPlugin;
 var path = require("path");
+let ngtools = require('@ngtools/webpack');
 // var failPlugin = require("webpack-fail-plugin");
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -30,7 +31,7 @@ FixJsonpPlugin.prototype.apply = function (compiler) {
     });
 };
 
-module.exports = function(platform) {
+module.exports = function (platform) {
     var entry = {};
     entry["bundle." + platform] = "./main";
     entry["vendor." + platform] = "./vendor";
@@ -63,39 +64,46 @@ module.exports = function(platform) {
             "setImmediate": false,
         },
         module: {
-            loaders: [
-                {
-                    test: /\.html$/,
-                    loader: "html"
-                },
+            rules: [
                 {
                     test: /\.ts$/,
-                    loader: 'awesome-typescript-loader'
-                },
-                {
-                    test: /\.scss$/,
-                    loaders: [
-                        'raw', 'resolve-url', 'sass'
+                    use: [
+                        'awesome-typescript?tsconfig=tsconfig.json',
+                        'aot-fix-loader',
+                        'angular2-template'
                     ]
                 },
+                {
+                    test: /\.html$/,
+                    use: 'raw'
+                }
             ]
         },
-        plugins: [
+        resolveLoader: {
+            alias: {
+                "aot-fix-loader": path.join(__dirname, "aot-fix-loader.js")
+            }
+        },
+        plugins: [ 
             // failPlugin,
-            new webpack.optimize.CommonsChunkPlugin({
-                name: ["vendor." + platform]
-            }),
             new webpack.DefinePlugin({
                 global: 'global',
                 __dirname: '__dirname',
                 "global.TNS_WEBPACK": 'true',
+            }),
+            new ngtools.AotPlugin({
+                tsConfigPath: './tsconfig-aot.json',
+                baseDir: path.resolve(__dirname, 'src'),
+                entryModule: path.join(__dirname, 'src', 'app.module') + '#AppModule'
+            }),
+            new webpack.optimize.CommonsChunkPlugin({
+                name: ["vendor." + platform]
             }),
             new CopyWebpackPlugin([
                 { from: "starter*.js" },
                 { from: "**/*.css" },
             ]),
             new FixJsonpPlugin(),
-                
         ]
     };
 }
