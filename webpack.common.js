@@ -98,6 +98,16 @@ module.exports = function(platform) {
                 { from: "**/*.css" },
             ]),
             new FixJsonpPlugin(),
+            new webpack.optimize.UglifyJsPlugin({
+                compress: { 
+                    screw_ie8: true,
+                    warnings: false
+                },
+                output: {
+                    comments: false
+                },
+                sourceMap: false
+            })
         ]
     };
 }

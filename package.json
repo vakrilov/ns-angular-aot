@@ -48,7 +48,7 @@
     "tns-core-modules": "2.3.0"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "2.1.1",    
+    "@angular/compiler-cli": "2.1.1",
     "babel-traverse": "6.16.0",
     "babel-types": "6.16.0",
     "babylon": "6.11.6",
